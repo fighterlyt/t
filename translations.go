@@ -3,6 +3,7 @@ package t
 import (
 	"io/fs"
 	"sort"
+	"unsafe"
 
 	"github.com/fighterlyt/log"
 	log2 "github.com/fighterlyt/t/log"
@@ -211,7 +212,7 @@ func (ts *Translations) N64(msgID, msgIDPlural string, n int64, args ...interfac
 
 // X is a short name of pgettext
 func (ts *Translations) X(msgCtxt, msgID string, args ...interface{}) string {
-	log2.Info(ts.logger, `Translations.X`, zap.String(`Translations.X`, msgID), zap.String(`domain`, ts.domain), zap.String(`locale`, ts.locale)) //nolint:lll
+	log2.Info(ts.logger, `Translations.X`, zap.String(`Translations.X`, msgID), zap.String(`domain`, ts.domain), zap.String(`locale`, ts.locale), zap.Uintptr(`指针`, uintptr(unsafe.Pointer(ts)))) //nolint:lll
 
 	tr := ts.GetOrNoop(ts.domain)
 	tor := tr.GetOrNoop(ts.locale)
@@ -228,5 +229,6 @@ func (ts *Translations) XN(msgCtxt, msgID, msgIDPlural string, n int, args ...in
 func (ts *Translations) XN64(msgCtxt, msgID, msgIDPlural string, n int64, args ...interface{}) string {
 	tr := ts.GetOrNoop(ts.domain)
 	tor := tr.GetOrNoop(ts.locale)
+
 	return tor.XN64(msgCtxt, msgID, msgIDPlural, n, args...)
 }
