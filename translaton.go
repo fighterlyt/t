@@ -37,6 +37,7 @@ func NewTranslation(domain string, logger log.Logger, translators ...Translator)
 	for _, tor := range translators {
 		tr.AddOrReplace(tor)
 	}
+
 	return tr
 }
 
@@ -46,12 +47,16 @@ func (tr *Translation) AddOrReplace(tor Translator) Translator {
 	if lang == "" {
 		return nil
 	}
+
 	lang = locale.Normalize(lang)
+
 	if pre, ok := tr.langs[lang]; ok {
 		tr.langs[lang] = tor
 		return pre
 	}
+
 	tr.langs[lang] = tor
+
 	return nil
 }
 

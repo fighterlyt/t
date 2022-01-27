@@ -3,10 +3,10 @@ package t
 import (
 	"io/fs"
 	"sort"
-	"unsafe"
 
 	"github.com/fighterlyt/log"
 	log2 "github.com/fighterlyt/t/log"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.uber.org/zap"
 
 	"github.com/fighterlyt/t/locale"
@@ -27,6 +27,11 @@ type Translations struct {
 	// sourceCodeLocale 源代码中的语言, 通常应该使用英文
 	sourceCodeLocale string
 	logger           log.Logger
+	id               string
+}
+
+func (t Translations) ID() string {
+	return t.id
 }
 
 // NewTranslations create a new Translations 新建翻译集
@@ -37,6 +42,7 @@ func NewTranslations(logger log.Logger) *Translations {
 		domains:          make(map[string]*Translation),
 		logger:           logger,
 		sourceCodeLocale: DefaultSourceCodeLocale,
+		id:               primitive.NewObjectID().Hex(),
 	}
 }
 
@@ -54,6 +60,7 @@ func (ts *Translations) clone() *Translations {
 		}(),
 		logger:           ts.logger,
 		sourceCodeLocale: ts.sourceCodeLocale,
+		id:               primitive.NewObjectID().Hex(),
 	}
 }
 
@@ -143,7 +150,7 @@ func (ts *Translations) UsedLocale() string {
 
 // SetLocale set current locale 设置要使用的语言
 func (ts *Translations) SetLocale(lang string) {
-	log2.Info(ts.logger, `SetLocale`, zap.String(`locale`, lang), zap.Uintptr(`指针`, uintptr(unsafe.Pointer(ts))))
+	log2.Info(ts.logger, `SetLocale`, zap.String(`locale`, lang), zap.String(`id`, ts.ID()))
 
 	if lang == "" {
 		lang = locale.GetDefault()
@@ -190,11 +197,11 @@ func (ts *Translations) D(domain string) *Translations {
 
 // L return a new Translations with locale
 func (ts *Translations) L(locale string) *Translations {
-	log2.Info(ts.logger, `L`, zap.String(`locale`, locale), zap.Uintptr(`指针`, uintptr(unsafe.Pointer(ts))))
+	log2.Info(ts.logger, `L`, zap.String(`locale`, locale), zap.String(`id`, ts.ID()))
 	result := ts.clone()
 	result.SetLocale(locale)
 
-	log2.Info(ts.logger, `L克隆完成`, zap.String(`locale`, locale), zap.Uintptr(`新指针`, uintptr(unsafe.Pointer(result))))
+	log2.Info(ts.logger, `L克隆完成`, zap.String(`locale`, locale), zap.String(`id`, result.ID()))
 
 	return result
 }
@@ -216,7 +223,7 @@ func (ts *Translations) N64(msgID, msgIDPlural string, n int64, args ...interfac
 
 // X is a short name of pgettext
 func (ts *Translations) X(msgCtxt, msgID string, args ...interface{}) string {
-	log2.Info(ts.logger, `Translations.X`, zap.String(`Translations.X`, msgID), zap.String(`domain`, ts.domain), zap.String(`locale`, ts.locale), zap.Uintptr(`指针`, uintptr(unsafe.Pointer(ts)))) //nolint:lll
+	log2.Info(ts.logger, `Translations.X`, zap.Strings(`Translations.X/domain/locale/id`, []string{msgID, ts.domain, ts.locale, ts.ID()})) //nolint:lll
 
 	tr := ts.GetOrNoop(ts.domain)
 	tor := tr.GetOrNoop(ts.locale)
