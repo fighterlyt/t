@@ -142,7 +142,7 @@ func (ts *Translations) UsedLocale() string {
 
 // SetLocale set current locale 设置要使用的语言
 func (ts *Translations) SetLocale(lang string) {
-	log2.Info(ts.logger, `SetLocale`, zap.String(`locale`, lang))
+	log2.Info(ts.logger, `SetLocale`, zap.String(`locale`, lang), zap.Uintptr(`指针`, uintptr(unsafe.Pointer(ts))))
 
 	if lang == "" {
 		lang = locale.GetDefault()
