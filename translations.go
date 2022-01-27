@@ -60,6 +60,7 @@ func (ts *Translations) BindFS(domain string, fsys fs.FS, logger log.Logger) {
 	tr := NewTranslation(domain, logger)
 	if tr.LoadFS(fsys) {
 		ts.domains[domain] = tr
+		ts.logger = logger
 	}
 }
 
