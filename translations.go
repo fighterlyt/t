@@ -114,6 +114,7 @@ func (ts *Translations) Locales() (locales []string) {
 		lang = locale.Normalize(lang)
 		if _, ok := m[lang]; !ok {
 			m[lang] = struct{}{}
+
 			locales = append(locales, lang)
 		}
 	}
@@ -189,8 +190,11 @@ func (ts *Translations) D(domain string) *Translations {
 
 // L return a new Translations with locale
 func (ts *Translations) L(locale string) *Translations {
+	log2.Info(ts.logger, `L`, zap.String(`locale`, locale), zap.Uintptr(`指针`, uintptr(unsafe.Pointer(ts))))
 	result := ts.clone()
 	result.SetLocale(locale)
+
+	log2.Info(ts.logger, `L克隆完成`, zap.String(`locale`, locale), zap.Uintptr(`新指针`, uintptr(unsafe.Pointer(result))))
 
 	return result
 }
