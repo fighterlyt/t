@@ -3,7 +3,7 @@ package translator_test
 import (
 	"testing"
 
-	"github.com/youthlin/t"
+	"github.com/fighterlyt/t"
 )
 
 func Test(tt *testing.T) {

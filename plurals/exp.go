@@ -8,7 +8,7 @@ import (
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/cockroachdb/errors"
-	"github.com/youthlin/t/plurals/parser"
+	"github.com/fighterlyt/t/plurals/parser"
 )
 
 // Eval 传入复数表达式，返回 n 应该使用哪种复数形式

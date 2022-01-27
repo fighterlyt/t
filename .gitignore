@@ -4,3 +4,4 @@ output/
 *.interp
 *.tokens
 .DS_Store
+.idea/

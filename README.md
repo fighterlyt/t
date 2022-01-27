@@ -1,24 +1,24 @@
 # t
 t: a translation util for go, inspired by GNU gettext  
 t: GNU gettext 的 Go 语言实现，Go 程序的国际化工具  
-[![sync-to-gitee](https://github.com/youthlin/t/actions/workflows/gitee.yaml/badge.svg)](https://github.com/youthlin/t/actions/workflows/gitee.yaml)
-[![test](https://github.com/youthlin/t/actions/workflows/test.yaml/badge.svg)](https://github.com/youthlin/t/actions/workflows/test.yaml)
+[![sync-to-gitee](https://github.com/fighterlyt/t/actions/workflows/gitee.yaml/badge.svg)](https://github.com/fighterlyt/t/actions/workflows/gitee.yaml)
+[![test](https://github.com/fighterlyt/t/actions/workflows/test.yaml/badge.svg)](https://github.com/fighterlyt/t/actions/workflows/test.yaml)
 [![codecov](https://codecov.io/gh/youthlin/t/branch/main/graph/badge.svg?token=6RyU5nb3YT)](https://codecov.io/gh/youthlin/t)
-[![Go Report Card](https://goreportcard.com/badge/github.com/youthlin/t)](https://goreportcard.com/report/github.com/youthlin/t)
-[![Go Reference](https://pkg.go.dev/badge/github.com/youthlin/t.svg)](https://pkg.go.dev/github.com/youthlin/t)
+[![Go Report Card](https://goreportcard.com/badge/github.com/fighterlyt/t)](https://goreportcard.com/report/github.com/fighterlyt/t)
+[![Go Reference](https://pkg.go.dev/badge/github.com/fighterlyt/t.svg)](https://pkg.go.dev/github.com/fighterlyt/t)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyouthlin%2Ft.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyouthlin%2Ft?ref=badge_shield)
 
 
 ## Install 安装
 
 ```bash
-go get -u github.com/youthlin/t
+go get -u github.com/fighterlyt/t
 ```
 
 go.mod
 ```go
 require (
-    github.com/youthlin/t latest
+github.com/fighterlyt/t latest
 )
 ```
 
@@ -27,7 +27,7 @@ Gitee 镜像：[gitee.com/youthlin/gottext](gitee.com/youthlin/gottext) (gottext
 ```
 // 使用 gitee 镜像
 // go.mod:
-replace github.com/youthlin/t latest => gitee.com/youthlin/gottext latest
+replace github.com/fighterlyt/t latest => gitee.com/youthlin/gottext latest
 ```
 
 
@@ -149,7 +149,7 @@ t.D(domain).L(userLang).T("msg_id")
 - ✅ mo file 支持 mo 二进制文件
 - ✅ extract from html templates 从模板文件中提取: [xtemplate](cmd/xtemplate/)
 ```bash
-go install github.com/youthlin/t/cmd/xtemplate@latest
+go install github.com/fighterlyt/t/cmd/xtemplate@latest
 ```
 
 ## Links 链接

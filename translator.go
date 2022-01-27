@@ -1,8 +1,8 @@
 package t
 
 import (
-	"github.com/youthlin/t/f"
-	"github.com/youthlin/t/translator"
+	"github.com/fighterlyt/t/f"
+	"github.com/fighterlyt/t/translator"
 )
 
 // Translator  翻译接口

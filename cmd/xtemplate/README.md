@@ -4,7 +4,7 @@ extract msgid from go template file and save to a pot file.
 
 
 ```bash
-go install github.com/youthlin/t/cmd/xtemplate@latest
+go install github.com/fighterlyt/t/cmd/xtemplate@latest
 xtemplate -i <input-file-pattern> -k keywords
 
 # e.g.

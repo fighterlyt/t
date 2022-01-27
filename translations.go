@@ -4,7 +4,7 @@ import (
 	"io/fs"
 	"sort"
 
-	"github.com/youthlin/t/locale"
+	"github.com/fighterlyt/t/locale"
 )
 
 // DefaultDomain 默认的文本域

@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/cockroachdb/errors"
-	"github.com/youthlin/t"
-	"github.com/youthlin/t/translator"
+	"github.com/fighterlyt/t"
+	"github.com/fighterlyt/t/translator"
 )
 
 // Param 输入参数
@@ -125,7 +125,7 @@ func (ctx *Context) header() *translator.Entry {
 		"MIME-Version: 1.0",
 		"Content-Type: text/plain; charset=CHARSET",
 		"Content-Transfer-Encoding: 8bit",
-		"X-Created-By: xtemplate(https://github.com/youthlin/t/tree/main/cmd/xtemplate)",
+		"X-Created-By: xtemplate(https://github.com/fighterlyt/t/tree/main/cmd/xtemplate)",
 	}
 	if ctx.hasPlural {
 		headers = append(headers, "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;")

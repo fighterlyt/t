@@ -8,8 +8,8 @@ import (
 	"text/template/parse"
 
 	"github.com/cockroachdb/errors"
-	"github.com/youthlin/t"
-	"github.com/youthlin/t/translator"
+	"github.com/fighterlyt/t"
+	"github.com/fighterlyt/t/translator"
 )
 
 var noopFun = func() string { return "" }

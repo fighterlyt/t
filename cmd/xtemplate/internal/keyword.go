@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/cockroachdb/errors"
-	"github.com/youthlin/t"
+	"github.com/fighterlyt/t"
 )
 
 // Keyword gettext keyword

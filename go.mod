@@ -1,12 +1,12 @@
-module github.com/youthlin/t
+module github.com/fighterlyt/t
 
 go 1.17
 
 require (
-	github.com/Xuanwo/go-locale v1.0.0
-	github.com/antlr/antlr4/runtime/Go/antlr v0.0.0-20210803070921-b358b509191a
+	github.com/Xuanwo/go-locale v1.1.0
+	github.com/antlr/antlr4/runtime/Go/antlr v0.0.0-20220123173649-896f90b22c48
 	github.com/cockroachdb/errors v1.8.6
-	github.com/smartystreets/goconvey v1.6.4
+	github.com/smartystreets/goconvey v1.7.2
 	golang.org/x/text v0.3.7
 )
 
@@ -20,6 +20,9 @@ require (
 	github.com/kr/pretty v0.2.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/smartystreets/assertions v0.0.0-20180927180507-b2de0cb4f26d // indirect
-	golang.org/x/sys v0.0.0-20210616094352-59db8d763f22 // indirect
+	github.com/smartystreets/assertions v1.2.0 // indirect
+	golang.org/x/mod v0.4.2 // indirect
+	golang.org/x/sys v0.0.0-20211023085530-d6a326fbbf70 // indirect
+	golang.org/x/tools v0.1.3 // indirect
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 )

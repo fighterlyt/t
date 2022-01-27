@@ -5,8 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	. "github.com/smartystreets/goconvey/convey"
-	"github.com/youthlin/t/translator"
+	"github.com/fighterlyt/t/translator"
 )
 
 func TestGlob(t *testing.T) {

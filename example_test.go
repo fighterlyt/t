@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/youthlin/t"
+	"github.com/fighterlyt/t"
 )
 
 var mu sync.Mutex

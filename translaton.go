@@ -5,8 +5,8 @@ import (
 	"io/fs"
 	"strings"
 
-	"github.com/youthlin/t/locale"
-	"github.com/youthlin/t/translator"
+	"github.com/fighterlyt/t/locale"
+	"github.com/fighterlyt/t/translator"
 )
 
 const (
