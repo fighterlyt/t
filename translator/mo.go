@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/cockroachdb/errors"
+	"github.com/fighterlyt/log"
 )
 
 // https://www.gnu.org/software/gettext/manual/html_node/MO-Files.html#MO-Files
@@ -89,7 +90,7 @@ type lenOff struct {
 }
 
 // ReadMo read mo from []byte content
-func ReadMo(content []byte) (*File, error) {
+func ReadMo(content []byte, logger log.Logger) (*File, error) {
 	file := new(File)
 	r := bytes.NewReader(content)
 	// 1 读取魔数
@@ -191,6 +192,8 @@ func ReadMo(content []byte) (*File, error) {
 		}
 		file.AddEntry(entry)
 	}
+
+	file.logger = logger
 	return file, nil
 }
 

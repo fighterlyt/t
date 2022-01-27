@@ -132,7 +132,7 @@ func (tr *Translation) LoadFile(file fs.File) error {
 
 // LoadPo load po file
 func (tr *Translation) LoadPo(content []byte) error {
-	poFile, err := translator.ReadPo(content)
+	poFile, err := translator.ReadPo(content, tr.logger)
 	if err != nil {
 		return err
 	}
@@ -144,7 +144,7 @@ func (tr *Translation) LoadPo(content []byte) error {
 
 // LoadMo load mo file
 func (tr *Translation) LoadMo(content []byte) error {
-	moFile, err := translator.ReadMo(content)
+	moFile, err := translator.ReadMo(content, tr.logger)
 
 	if err != nil {
 		return err

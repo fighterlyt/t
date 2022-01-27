@@ -10,12 +10,13 @@ import (
 	"strings"
 
 	"github.com/cockroachdb/errors"
+	"github.com/fighterlyt/log"
 )
 
 var errEmptyPo = fmt.Errorf("empty po file")
 
 // ReadPo read po file
-func ReadPo(content []byte) (*File, error) {
+func ReadPo(content []byte, logger log.Logger) (*File, error) {
 	if len(content) == 0 {
 		return nil, errors.Wrapf(errEmptyPo, "read po file failed")
 	}
@@ -23,6 +24,9 @@ func ReadPo(content []byte) (*File, error) {
 	data = strings.ReplaceAll(data, "\r", "")
 	r := newReader(strings.Split(data, "\n"))
 	file := new(File)
+
+	file.logger = logger
+
 	for {
 		entry, err := readEntry(r)
 		if entry.isValid() {
