@@ -37,7 +37,7 @@ func (f *File) Lang() string {
 
 // X is a short name for p.gettext
 func (f *File) X(msgCtxt, msgID string, args ...interface{}) string {
-	log2.Info(f.logger, `X`, zap.String(`msgID`, msgID))
+	log2.Info(f.logger, `X`, zap.String(`msgID`, msgID), zap.String(`lang`, f.Lang()))
 
 	entry, ok := f.entries[key(msgCtxt, msgID)]
 	if !ok || entry.MsgStr == "" {

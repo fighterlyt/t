@@ -5,6 +5,8 @@ import (
 	"sort"
 
 	"github.com/fighterlyt/log"
+	log2 "github.com/fighterlyt/t/log"
+	"go.uber.org/zap"
 
 	"github.com/fighterlyt/t/locale"
 )
@@ -193,8 +195,10 @@ func (ts *Translations) N64(msgID, msgIDPlural string, n int64, args ...interfac
 
 // X is a short name of pgettext
 func (ts *Translations) X(msgCtxt, msgID string, args ...interface{}) string {
+	log2.Info(ts.logger, `Translations.X`, zap.String(`Translations.X`, msgID), zap.String(`domain`, ts.domain), zap.String(`locale`, ts.locale))
 	tr := ts.GetOrNoop(ts.domain)
 	tor := tr.GetOrNoop(ts.locale)
+
 	return tor.X(msgCtxt, msgID, args...)
 }
 
