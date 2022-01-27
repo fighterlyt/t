@@ -83,6 +83,7 @@ func (ts *Translations) HasDomain(domain string) bool {
 			return true
 		}
 	}
+
 	return false
 }
 
@@ -91,6 +92,7 @@ func (ts *Translations) Domains() (domains []string) {
 	for domain := range ts.domains {
 		domains = append(domains, domain)
 	}
+
 	return
 }
 
@@ -104,7 +106,9 @@ func (ts *Translations) Locales() (locales []string) {
 	tr := ts.GetOrNoop(ts.domain)
 	m := make(map[string]struct{}, len(tr.langs)+1)
 	m[ts.sourceCodeLocale] = struct{}{}
+
 	locales = append(locales, ts.sourceCodeLocale)
+
 	for lang := range tr.langs {
 		lang = locale.Normalize(lang)
 		if _, ok := m[lang]; !ok {
@@ -112,30 +116,39 @@ func (ts *Translations) Locales() (locales []string) {
 			locales = append(locales, lang)
 		}
 	}
+
 	sort.Strings(locales)
+
 	return
 }
 
 // UsedLocale return the locale that actually used
 func (ts *Translations) UsedLocale() string {
 	tr, ok := ts.Get(ts.domain)
+
 	if !ok {
 		return ts.sourceCodeLocale
 	}
+
 	_, ok = tr.Get(ts.locale)
+
 	if !ok {
 		return ts.sourceCodeLocale
 	}
+
 	return ts.locale
 }
 
 // SetLocale set current locale 设置要使用的语言
 func (ts *Translations) SetLocale(lang string) {
+	log2.Info(ts.logger, `SetLocale`, zap.String(`locale`, lang))
+
 	if lang == "" {
 		lang = locale.GetDefault()
 	} else {
 		lang = locale.Normalize(lang)
 	}
+
 	ts.locale = lang
 }
 
@@ -161,6 +174,7 @@ func (ts *Translations) GetOrNoop(domain string) *Translation {
 	if tr, ok := ts.domains[domain]; ok {
 		return tr
 	}
+
 	return trNoop
 }
 
@@ -168,6 +182,7 @@ func (ts *Translations) GetOrNoop(domain string) *Translation {
 func (ts *Translations) D(domain string) *Translations {
 	result := ts.clone()
 	result.SetDomain(domain)
+
 	return result
 }
 
@@ -175,6 +190,7 @@ func (ts *Translations) D(domain string) *Translations {
 func (ts *Translations) L(locale string) *Translations {
 	result := ts.clone()
 	result.SetLocale(locale)
+
 	return result
 }
 
@@ -195,7 +211,8 @@ func (ts *Translations) N64(msgID, msgIDPlural string, n int64, args ...interfac
 
 // X is a short name of pgettext
 func (ts *Translations) X(msgCtxt, msgID string, args ...interface{}) string {
-	log2.Info(ts.logger, `Translations.X`, zap.String(`Translations.X`, msgID), zap.String(`domain`, ts.domain), zap.String(`locale`, ts.locale))
+	log2.Info(ts.logger, `Translations.X`, zap.String(`Translations.X`, msgID), zap.String(`domain`, ts.domain), zap.String(`locale`, ts.locale)) //nolint:lll
+
 	tr := ts.GetOrNoop(ts.domain)
 	tor := tr.GetOrNoop(ts.locale)
 
