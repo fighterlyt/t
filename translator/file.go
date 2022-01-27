@@ -5,7 +5,10 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/fighterlyt/log"
 	"github.com/fighterlyt/t/format"
+	log2 "github.com/fighterlyt/t/log"
+	"go.uber.org/zap"
 )
 
 const (
@@ -23,6 +26,7 @@ type File struct {
 	entries map[string]*Entry
 	headers map[string]string
 	plural  *plural
+	logger  log.Logger
 }
 
 // Lang get this translations' language
@@ -33,10 +37,16 @@ func (f *File) Lang() string {
 
 // X is a short name for p.gettext
 func (f *File) X(msgCtxt, msgID string, args ...interface{}) string {
+	log2.Info(f.logger, `X`, zap.String(`msgID`, msgID))
+
 	entry, ok := f.entries[key(msgCtxt, msgID)]
 	if !ok || entry.MsgStr == "" {
+		log2.Info(f.logger, `没有entry`)
+
 		return format.Format(msgID, args...)
 	}
+
+	log2.Info(f.logger, `找到entry`, zap.String(`entry`, entry.MsgStr))
 
 	return format.Format(entry.MsgStr, args...)
 }

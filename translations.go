@@ -4,6 +4,8 @@ import (
 	"io/fs"
 	"sort"
 
+	"github.com/fighterlyt/log"
+
 	"github.com/fighterlyt/t/locale"
 )
 
@@ -21,14 +23,16 @@ type Translations struct {
 	domains map[string]*Translation // key is domain
 	// sourceCodeLocale 源代码中的语言, 通常应该使用英文
 	sourceCodeLocale string
+	logger           log.Logger
 }
 
 // NewTranslations create a new Translations 新建翻译集
-func NewTranslations() *Translations {
+func NewTranslations(logger log.Logger) *Translations {
 	return &Translations{
 		locale:           locale.GetDefault(),
 		domain:           DefaultDomain,
 		domains:          make(map[string]*Translation),
+		logger:           logger,
 		sourceCodeLocale: DefaultSourceCodeLocale,
 	}
 }
@@ -45,6 +49,7 @@ func (ts *Translations) clone() *Translations {
 			}
 			return m
 		}(),
+		logger:           ts.logger,
 		sourceCodeLocale: ts.sourceCodeLocale,
 	}
 }
