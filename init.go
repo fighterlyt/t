@@ -2,9 +2,11 @@ package t
 
 import (
 	"io/fs"
+
+	"github.com/fighterlyt/log"
 )
 
-var global = NewTranslations()
+var global = NewTranslations(nil)
 
 // Global return the global Translations instance
 func Global() *Translations {
@@ -17,23 +19,23 @@ func SetGlobal(g *Translations) {
 }
 
 // Load load translation from path to current domain
-func Load(path string) {
-	LoadFS(asFS(path))
+func Load(path string, logger log.Logger) {
+	LoadFS(asFS(path), logger)
 }
 
 // LoadFS load translation from file system to current domain
-func LoadFS(fsys fs.FS) {
-	BindFS(Domain(), fsys)
+func LoadFS(fsys fs.FS, logger log.Logger) {
+	BindFS(Domain(), fsys, logger)
 }
 
 // Bind bind translation from path to specified domain
-func Bind(domain, path string) {
-	BindFS(domain, asFS(path))
+func Bind(domain, path string, logger log.Logger) {
+	BindFS(domain, asFS(path), logger)
 }
 
 // BindFS bind translation from file system to specified domain
-func BindFS(domain string, fsys fs.FS) {
-	global.BindFS(domain, fsys)
+func BindFS(domain string, fsys fs.FS, logger log.Logger) {
+	global.BindFS(domain, fsys, logger)
 }
 
 // Locale return current locale(it may not be used locale)

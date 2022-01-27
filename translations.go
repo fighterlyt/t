@@ -56,8 +56,8 @@ func (ts *Translations) clone() *Translations {
 
 // BindFS load a Translation form file system and bind to a domain
 // 从文件系统绑定翻译域
-func (ts *Translations) BindFS(domain string, fsys fs.FS) {
-	tr := NewTranslation(domain)
+func (ts *Translations) BindFS(domain string, fsys fs.FS, logger log.Logger) {
+	tr := NewTranslation(domain, logger)
 	if tr.LoadFS(fsys) {
 		ts.domains[domain] = tr
 	}
