@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/fighterlyt/t/f"
+	"github.com/fighterlyt/t/format"
 )
 
 const (
@@ -26,41 +26,44 @@ type File struct {
 }
 
 // Lang get this translations' language
-func (file *File) Lang() string {
-	lang, _ := file.GetHeader(HeaderLanguage)
+func (f *File) Lang() string {
+	lang, _ := f.GetHeader(HeaderLanguage)
 	return lang
 }
 
-// X is ashort name for pgettext
-func (file *File) X(msgCtxt, msgID string, args ...interface{}) string {
-	entry, ok := file.entries[key(msgCtxt, msgID)]
+// X is a short name for p.gettext
+func (f *File) X(msgCtxt, msgID string, args ...interface{}) string {
+	entry, ok := f.entries[key(msgCtxt, msgID)]
 	if !ok || entry.MsgStr == "" {
-		return f.Format(msgID, args...)
+		return format.Format(msgID, args...)
 	}
-	return f.Format(entry.MsgStr, args...)
+
+	return format.Format(entry.MsgStr, args...)
 }
 
-// XN64 is ashort name for npgettext
-func (file *File) XN64(msgCtxt, msgID, msgIDPlural string, n int64, args ...interface{}) string {
-	entry, ok := file.entries[key(msgCtxt, msgID)]
+// XN64 is a short name for np.gettext
+func (f *File) XN64(msgCtxt, msgID, msgIDPlural string, n int64, args ...interface{}) string {
+	entry, ok := f.entries[key(msgCtxt, msgID)]
 	if !ok {
-		return f.DefaultPlural(msgID, msgIDPlural, n, args...)
+		return format.DefaultPlural(msgID, msgIDPlural, n, args...)
 	}
-	plural := file.getPlural()
+	plural := f.getPlural()
 	if plural.totalForms <= 0 || plural.fn == nil {
-		return f.DefaultPlural(msgID, msgIDPlural, n, args...)
+		return format.DefaultPlural(msgID, msgIDPlural, n, args...)
 	}
 	index := plural.fn(n)
+
 	if index < 0 || index >= int(plural.totalForms) || index > len(entry.MsgStrN) || entry.MsgStrN[index] == "" {
 		// 超出范围
-		return f.DefaultPlural(msgID, msgIDPlural, n, args...)
+		return format.DefaultPlural(msgID, msgIDPlural, n, args...)
 	}
-	return f.Format(entry.MsgStrN[index], args...)
+
+	return format.Format(entry.MsgStrN[index], args...)
 }
 
 // SortedEntry sort entry by key
-func (file *File) SortedEntry() (entries []*Entry) {
-	for _, e := range file.entries {
+func (f *File) SortedEntry() (entries []*Entry) {
+	for _, e := range f.entries {
 		entries = append(entries, e)
 	}
 	sort.Slice(entries, func(i, j int) bool {
@@ -72,28 +75,28 @@ func (file *File) SortedEntry() (entries []*Entry) {
 }
 
 // AddEntry adds a Entry
-func (file *File) AddEntry(e *Entry) {
-	if file.entries == nil {
-		file.entries = map[string]*Entry{}
+func (f *File) AddEntry(e *Entry) {
+	if f.entries == nil {
+		f.entries = map[string]*Entry{}
 	}
-	file.entries[e.Key()] = e
+	f.entries[e.Key()] = e
 	if e.isHeader() {
-		file.initHeader()
-		file.initPlural()
+		f.initHeader()
+		f.initPlural()
 	}
 }
 
 // GetHeader get header value by key
-func (file *File) GetHeader(key string) (value string, ok bool) {
-	file.initHeader()
-	value, ok = file.headers[key]
+func (f *File) GetHeader(key string) (value string, ok bool) {
+	f.initHeader()
+	value, ok = f.headers[key]
 	return
 }
 
-func (file *File) initHeader() {
-	if file.headers == nil {
+func (f *File) initHeader() {
+	if f.headers == nil {
 		headers := make(map[string]string)
-		if headerEntry, ok := file.entries[key("", "")]; ok {
+		if headerEntry, ok := f.entries[key("", "")]; ok {
 			kvs := strings.Split(headerEntry.MsgStr, "\n")
 			for _, kv := range kvs {
 				if kv == "" {
@@ -109,18 +112,18 @@ func (file *File) initHeader() {
 				headers[k] = v
 			}
 		}
-		file.headers = headers
+		f.headers = headers
 	}
 }
 
-func (file *File) getPlural() *plural {
-	file.initPlural()
-	return file.plural
+func (f *File) getPlural() *plural {
+	f.initPlural()
+	return f.plural
 }
 
-func (file *File) initPlural() {
-	if file.plural == nil {
-		forms, _ := file.GetHeader(HeaderPluralForms)
-		file.plural = parsePlural(forms)
+func (f *File) initPlural() {
+	if f.plural == nil {
+		forms, _ := f.GetHeader(HeaderPluralForms)
+		f.plural = parsePlural(forms)
 	}
 }

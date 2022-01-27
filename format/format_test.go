@@ -1,10 +1,8 @@
-package f_test
+package format_test
 
 import (
 	"fmt"
 	"testing"
-
-	"github.com/fighterlyt/t/f"
 )
 
 func TestFormat(t *testing.T) {

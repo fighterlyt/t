@@ -1,4 +1,4 @@
-package f
+package format
 
 import "fmt"
 
@@ -19,6 +19,7 @@ func Format(format string, args ...interface{}) string {
 	// see fmt 包注释，或中文文档 https://studygolang.com/static/pkgdoc/pkg/fmt.htm
 	args = append(args, "")
 	format = fmt.Sprintf("%s%%[%d]s", format, length+1)
+
 	return fmt.Sprintf(format, args...)
 }
 
@@ -27,5 +28,6 @@ func DefaultPlural(msgID, msgIDPlural string, n int64, args ...interface{}) stri
 	if n != 1 {
 		return Format(msgIDPlural, args...)
 	}
+
 	return Format(msgID, args...)
 }

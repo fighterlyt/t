@@ -23,13 +23,17 @@ var (
 func parsePlural(forms string) *plural {
 	var p plural
 	p.fn = invalidPluralFn
+
 	if forms == "" {
 		return &p
 	}
+
 	find := rePlurals.FindAllStringSubmatch(forms, -1)
+
 	if len(find) == 1 && len(find[0]) == 3 {
 		n := find[0][1]
 		exp := find[0][2]
+
 		if total, err := strconv.ParseInt(n, 10, 64); err == nil {
 			p.totalForms = int(total)
 			p.expression = exp
@@ -38,9 +42,11 @@ func parsePlural(forms string) *plural {
 				if err != nil {
 					return -1
 				}
+
 				return int(index)
 			}
 		}
 	}
+
 	return &p
 }
